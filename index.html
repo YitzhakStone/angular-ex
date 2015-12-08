@@ -1,0 +1,50 @@
+<html>
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script>
+      
+      function UrlExists(url) {
+        try {
+          var http = new XMLHttpRequest();
+          http.open('HEAD', url, false);
+          http.send();
+          return http.status != 404;
+        } catch(err) {
+          return false;
+        }
+      }
+
+      Number.prototype.zeroPad = function(digits) {
+        var loop = digits;
+        var zeros = "";
+        while (loop) {
+          zeros += "0";
+          loop--;
+        }
+        return (this.toString().length > digits) ?
+          this.toString() : (zeros + this).slice(-digits);
+      }
+      
+      $( document ).ready(function() {
+        var urlPre = './ex';
+        var i = 1;
+        var exNum = i.zeroPad(2);
+        var url = urlPre + exNum;
+        var div = $('#ex');
+        var links = ''; 
+        while (UrlExists(url)) {
+          links += '<li><a href="' + url + '">' + url + '</a></li>';
+          exNum = (++i).zeroPad(2);
+          url = urlPre + exNum;
+        }
+        div.html('<ul>' + links + '</ul>');
+      });
+
+    </script>
+  </head>
+  <body>
+    <h1>AngularJS</h1>
+    <h2>Exemplos</h2>
+    <div id="ex"></div>
+  </body>
+</html>
